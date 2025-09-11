@@ -5,6 +5,8 @@
 
 #include "main_core_1.h"
 
+namespace main {
+
 void core_1_task(void* args) {
   uint32_t counter{};
 
@@ -37,9 +39,9 @@ void core_1_task(void* args) {
       printf("%f ", my_data.ch6);
       printf("Delta Time: %.8f\n", my_data.dt);
 
-      graph("GyroX", my_data.gyro_x, TOP);
-      graph("GyroY", my_data.gyro_y, TOP);
-      graph("GyroZ", my_data.gyro_z, TOP);
+      graph("GyroX", my_data.ori_x, TOP);
+      graph("GyroY", my_data.ori_y, TOP);
+      graph("GyroZ", my_data.ori_z, TOP);
       graph("SetX", my_data.set_x, TOP);
       graph("SetY", my_data.set_y, TOP);
       graph("SetZ", my_data.set_z, TOP);
@@ -86,3 +88,5 @@ void core_1_task(void* args) {
     }
   }
 }
+
+}  // namespace main

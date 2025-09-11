@@ -11,8 +11,22 @@
 #include "esp_timer.h"
 #include "utility.h"
 
-void control_loop();
+namespace main {
+
+constexpr uint16_t MAX_ANGLE = 50;
+constexpr uint16_t TRANSMITTER_ZERO = 1500;
+constexpr uint16_t TRANSMITTER_RANGE = 500;
+constexpr uint16_t TRANSMITTER_MAX = 2000;
+constexpr uint16_t TRANSMITTER_MIN = 1000;
+constexpr uint16_t ARMED_THROTTLE = 10;
+
+constexpr float RAD_TO_DEG = 57.3;
+constexpr float DEG_TO_RAD = 0.017452F;
+constexpr float INPUT_TO_MAX_ANGLE = DEG_TO_RAD * MAX_ANGLE / TRANSMITTER_RANGE;
+constexpr float INPUT_TO_PRECENT = 0.1F;
+
+constexpr float PI = 3.1415;
 
 void core_0_task(void* args);
 
-auto update_yaw(float curr_yaw, float yaw_rate, float dt) -> float;
+}  // namespace main
