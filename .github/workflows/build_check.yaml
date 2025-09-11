@@ -1,0 +1,32 @@
+name: Build check
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  clang-tidy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install prerequisites
+      run: sudo apt-get update && sudo apt-get install -y git wget python3 python3-pip ninja-build clang-tidy
+
+    - name: Install ESP-IDF
+      run: |
+        mkdir -p $HOME/esp
+        cd $HOME/esp
+        git clone --recursive https://github.com/espressif/esp-idf.git
+        cd esp-idf
+        ./install.sh
+
+    - name: Run build project
+      run: |
+        source $HOME/esp/esp-idf/export.sh
+        idf.py fullclean
+        idf.py set-target esp32s3
+        idf.py build
