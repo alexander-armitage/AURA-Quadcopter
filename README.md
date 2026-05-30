@@ -19,7 +19,7 @@
 ## Control
 <div align="center">
 
-<img src=".github/images/Tuning_Graph.jpg" alt="AURA PCBs Stacked" width="500"/>
+<img src=".github/images/Tuning_Graph.png" alt="AURA PCBs Stacked" width="500"/>
 
 </div>
 
