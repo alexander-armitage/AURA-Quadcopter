@@ -21,9 +21,9 @@ void core_0_task(void* args) {
   pca9685::pca9685 my_pca(&my_bus);
 
   // PID Controller defintions
-  pid::pid pid_x(0.65F, 0.55F, 0.0001F, 0.0F, 25.0F);
-  pid::pid pid_y(0.65F, 0.55F, 0.0001F, 0.0F, 25.0F);
-  pid::pid pid_z(0.9F, 0.75F, 0.0001F, 0.0F, 25.0F);
+  pid::pid pid_x(0.6F, 0.9F, 0.00003F, 0.0F, 25.0F);
+  pid::pid pid_y(0.6F, 0.9F, 0.00003F, 0.0F, 25.0F);
+  pid::pid pid_z(1.5F, 2.0F, 0.00003F, 0.0F, 25.0F);
 
   // ESC object definitions
   pca9685::pca_esc esc0(&my_pca, 0);
@@ -170,8 +170,8 @@ void core_0_task(void* args) {
     meas_acc = meas_acc.normalise();
     meas_mag = meas_mag.normalise();
 
-    // Use filter if accelerometer is roughly gravity
-    if (acc_mag > 9.0F && acc_mag < 10.6F) {
+    // Use filter if accelerometer is roughly measuring gravity
+    if (acc_mag > 9.6F && acc_mag < 10.0F) {
       ori_quat = filter.update_acc_gyro(ori_quat, gyro, meas_acc, dt);
     } else {
       ori_quat = ori_quat.update(gyro, dt);
@@ -207,9 +207,9 @@ void core_0_task(void* args) {
 
     // Check if stabalised or acro mode
     if (my_data.ch6 < 1250) {
-      pid_x.set_setpoint((my_data.ch1) * 10);
-      pid_y.set_setpoint((my_data.ch2) * 10);
-      pid_z.set_setpoint((my_data.ch4) * 10);
+      pid_x.set_setpoint((my_data.ch1) * 5);
+      pid_y.set_setpoint((my_data.ch2) * 5);
+      pid_z.set_setpoint((my_data.ch4) * 5);
     } else {
       pid_x.set_setpoint((my_data.ch1 - ori_error.x()) * 5);
       pid_y.set_setpoint((my_data.ch2 - ori_error.y()) * 5);
@@ -232,8 +232,8 @@ void core_0_task(void* args) {
     ESP_ERROR_CHECK(esc2.set_throttle(my_data.esc2));
     ESP_ERROR_CHECK(esc3.set_throttle(my_data.esc3));
 
-    // Data log every 50 loops to keep control loop fast
-    if (loop_counter % 50 != 0) {
+    // Data log every 10 loops to keep control loop fast
+    if (loop_counter % 10 != 0) {
       continue;
     }
 
@@ -246,9 +246,9 @@ void core_0_task(void* args) {
     my_data.ori_y = ori_euler.y();
     my_data.ori_z = ori_euler.z();
 
-    my_data.set_x = (my_data.ch1 - ori_error.x()) * RAD_TO_DEG;
-    my_data.set_y = (my_data.ch2 - ori_error.y()) * RAD_TO_DEG;
-    my_data.set_z = (yaw - ori_error.z()) * RAD_TO_DEG;
+    my_data.set_x = my_data.ch1 * 5; //my_data.ch1 - ori_error.x()) * RAD_TO_DEG;
+    my_data.set_y = my_data.ch2 * 5; //(my_data.ch2 - ori_error.y()) * RAD_TO_DEG;
+    my_data.set_z = my_data.ch4 * 5; //(yaw - ori_error.z()) * RAD_TO_DEG;
 
     my_data.gyro_x = gyro.x();
     my_data.gyro_y = gyro.y();

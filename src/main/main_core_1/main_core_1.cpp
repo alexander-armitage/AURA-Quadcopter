@@ -19,8 +19,9 @@ void core_1_task(void* args) {
 
   FILE* sd_file;
 
-  // Clear file contents
-  sd_file = fopen("/sd_card/data.txt", "w");
+  // Write mark of new flight
+  sd_file = fopen("/sd_card/data.txt", "a");
+  fprintf(sd_file, "\n\n\n<<< NEW FLIGHT DATA >>>\n\n\n");
   fclose(sd_file);
 
   while (true) {
@@ -56,7 +57,7 @@ void core_1_task(void* args) {
       graph("ESC_2", my_data.esc2, BOT);
       graph("ESC_3", my_data.esc3, BOT);
 
-      // Write to flash (all in one fprintf for speed)
+      // Write to SD Card (all in one fprintf for speed)
       sd_file = fopen("/sd_card/data.txt", "a");
       if (!sd_file) {
         ESP_LOGE("main", "Failed to open data.txt: errno=%d (%s)", errno,

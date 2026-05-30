@@ -32,7 +32,9 @@ auto pid::reset() -> void {
   // Update the previous error to be the current error
   _prev_state = error;
 
-  return (_kp * error) + (_ki * _integral) + (_kd * derivative);
+  float u = (_kp * error) + (_ki * _integral) + (_kd * derivative);
+
+  return std::clamp(u, -_anti_wind_lim, +_anti_wind_lim);
 }
 
 auto pid::enable_disable_interal(bool enabled) -> void {

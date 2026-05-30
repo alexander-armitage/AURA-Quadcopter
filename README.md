@@ -10,8 +10,17 @@
 
 ## Contents
 
-1. [Overview](#overview)  
-2. [Repository Structure](#repository-structure)
+1. [Overview](#overview)
+2. [Control](#control)
 3. [License](#license)
 
 ## Overview
+
+## Control
+<div align="center">
+
+<img src=".github/images/Tuning_Graph.jpg" alt="AURA PCBs Stacked" width="500"/>
+
+</div>
+
+## License
