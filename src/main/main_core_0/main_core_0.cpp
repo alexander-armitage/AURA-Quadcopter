@@ -21,9 +21,9 @@ void core_0_task(void* args) {
   pca9685::pca9685 my_pca(&my_bus);
 
   // PID Controller defintions
-  pid::pid pid_x(0.6F, 0.9F, 0.00003F, 0.0F, 25.0F);
-  pid::pid pid_y(0.6F, 0.9F, 0.00003F, 0.0F, 25.0F);
-  pid::pid pid_z(1.5F, 2.0F, 0.00003F, 0.0F, 25.0F);
+  pid::pid pid_x(0.625F, 2.0F, 0.0F, 0.0F, 100.0F); // 0.00003F
+  pid::pid pid_y(0.625F, 2.0F, 0.0F, 0.0F, 100.0F);
+  pid::pid pid_z(1.5F, 2.0F, 0.00003F, 0.0F, 100.0F);
 
   // ESC object definitions
   pca9685::pca_esc esc0(&my_pca, 0);
@@ -216,7 +216,7 @@ void core_0_task(void* args) {
       pid_z.set_setpoint((yaw - ori_error.z()) * 5);
     }
 
-    //  Calculate control outputs
+    // Calculate control outputs
     my_data.pid_x = pid_x.update(gyro.x(), dt);
     my_data.pid_y = pid_y.update(gyro.y(), dt);
     my_data.pid_z = pid_z.update(gyro.z(), dt);
@@ -246,13 +246,27 @@ void core_0_task(void* args) {
     my_data.ori_y = ori_euler.y();
     my_data.ori_z = ori_euler.z();
 
-    my_data.set_x = my_data.ch1 * 5; //my_data.ch1 - ori_error.x()) * RAD_TO_DEG;
-    my_data.set_y = my_data.ch2 * 5; //(my_data.ch2 - ori_error.y()) * RAD_TO_DEG;
-    my_data.set_z = my_data.ch4 * 5; //(yaw - ori_error.z()) * RAD_TO_DEG;
+    my_data.set_x = pid_x.setpoint();
+    my_data.set_y = pid_y.setpoint();
+    my_data.set_z = pid_z.setpoint();
+
+    my_data.p_x = pid_x.p_term();
+    my_data.p_y = pid_y.p_term();
+    my_data.p_z = pid_z.p_term();
+
+    my_data.i_x = pid_x.i_term();
+    my_data.i_y = pid_y.i_term();
+    my_data.i_z = pid_z.i_term();
+
+    my_data.d_x = pid_x.d_term();
+    my_data.d_y = pid_y.d_term();
+    my_data.d_z = pid_z.d_term();
 
     my_data.gyro_x = gyro.x();
     my_data.gyro_y = gyro.y();
     my_data.gyro_z = gyro.z();
+
+    // Record PID values
 
     my_data.dt = dt;
 

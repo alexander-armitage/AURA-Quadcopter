@@ -68,6 +68,9 @@ void core_1_task(void* args) {
               "%f, %f, %f, %f, %f, %f, "  // Transmitter
               "%f, %f, %f, %f, "          // ESC outputs
               "%f, %f, %f, "              // PID
+              "%f, %f, %f, "              // P
+              "%f, %f, %f, "              // I
+              "%f, %f, %f, "              // D
               "%f, %f, %f, "              // Setpoints
               "%f, %f, %f, "              // Ori
               "%f, %f, %f, %f, "          // Gyro + dt
@@ -75,6 +78,8 @@ void core_1_task(void* args) {
               my_data.ch1, my_data.ch2, my_data.ch3, my_data.ch4, my_data.ch5,
               my_data.ch6, my_data.esc0, my_data.esc1, my_data.esc2,
               my_data.esc3, my_data.pid_x, my_data.pid_y, my_data.pid_z,
+              my_data.p_x, my_data.p_y, my_data.p_z, my_data.i_x, my_data.i_y,
+              my_data.i_z, my_data.d_x, my_data.d_y, my_data.d_z,
               my_data.set_x, my_data.set_y, my_data.set_z, my_data.ori_x,
               my_data.ori_y, my_data.ori_z, my_data.gyro_x, my_data.gyro_y,
               my_data.gyro_z, my_data.dt, my_data.voltage, my_data.current,

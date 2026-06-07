@@ -17,6 +17,10 @@ class pid {
   float _setpoint{};
   float _prev_state{};
 
+  float _p_term;
+  float _i_term;
+  float _d_term;
+
   const float _anti_wind_lim;
 
   bool _enabled_integral;
@@ -28,6 +32,10 @@ class pid {
   [[nodiscard]] auto kp() const -> float { return _kp; }
   [[nodiscard]] auto ki() const -> float { return _ki; }
   [[nodiscard]] auto kd() const -> float { return _kd; }
+
+  [[nodiscard]] auto p_term() const -> float { return _p_term; }
+  [[nodiscard]] auto i_term() const -> float { return _i_term; }
+  [[nodiscard]] auto d_term() const -> float { return _d_term; }
 
   [[nodiscard]] auto prev_error() const -> float { return _prev_state; }
   [[nodiscard]] auto integral() const -> float { return _integral; }

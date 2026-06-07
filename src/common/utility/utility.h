@@ -65,6 +65,9 @@ struct sensor_data {
   float ch1, ch2, ch3, ch4, ch5, ch6;
   float esc0, esc1, esc2, esc3;
   float pid_x, pid_y, pid_z;
+  float p_x, p_y, p_z;
+  float i_x, i_y, i_z;
+  float d_x, d_y, d_z;
   float set_x, set_y, set_z;
   float ori_x, ori_y, ori_z;
 };
