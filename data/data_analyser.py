@@ -46,10 +46,6 @@ GRAPH1 = [
     "p_x",
     "i_x",
     "d_x"
-    #"ch1",
-    #"ch2",
-    #"ch3",
-    #"ch4",
 ]
 
 GRAPH2 = [
@@ -59,7 +55,7 @@ GRAPH2 = [
     "set_y",
     "p_y",
     "i_y",
-    #"d_y"
+    "d_y"
     #"ch1",
     #"ch2",
     #"ch3",
@@ -69,9 +65,9 @@ GRAPH2 = [
 GRAPH3 = [
     #"pid_z",
     #"ori_z",
-    #"gyro_z",
-    #"set_z",
-    #"p_z",
+    "gyro_z",
+    "set_z",
+    "p_z",
     "i_z",
     "d_z"
 ]
@@ -102,5 +98,6 @@ for ax, signals in zip(axes, graph_lists):
 
 plt.xlabel("Sample")
 plt.tight_layout()
-plt.xlim(left=0,right=650)
+#plt.xlim(left=0,right=650)
+plt.ylim(bottom=-1, top=1)
 plt.show()

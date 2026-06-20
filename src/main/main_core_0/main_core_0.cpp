@@ -195,7 +195,7 @@ void core_0_task(void* args) {
     }
 
     // Avoid integral windup by only enabling when flying
-    if (my_data.ch3 < 1050) {
+    if (my_data.ch3 < 1010) {
       pid_x.enable_disable_interal(false);
       pid_y.enable_disable_interal(false);
       pid_z.enable_disable_interal(false);
@@ -242,14 +242,17 @@ void core_0_task(void* args) {
     ori_euler = ori_quat.to_euler();
     ori_euler = ori_euler.to_degrees();
 
+    // Record orientation
     my_data.ori_x = ori_euler.x();
     my_data.ori_y = ori_euler.y();
     my_data.ori_z = ori_euler.z();
 
+    // Record PID setpoints
     my_data.set_x = pid_x.setpoint();
     my_data.set_y = pid_y.setpoint();
     my_data.set_z = pid_z.setpoint();
 
+    // Record PID individual terms
     my_data.p_x = pid_x.p_term();
     my_data.p_y = pid_y.p_term();
     my_data.p_z = pid_z.p_term();
@@ -262,12 +265,12 @@ void core_0_task(void* args) {
     my_data.d_y = pid_y.d_term();
     my_data.d_z = pid_z.d_term();
 
+    // Record gyro rates
     my_data.gyro_x = gyro.x();
     my_data.gyro_y = gyro.y();
     my_data.gyro_z = gyro.z();
 
-    // Record PID values
-
+    // Record useful miscellaneous values
     my_data.dt = dt;
 
     my_data.temp = my_bmp.get_temperature();
